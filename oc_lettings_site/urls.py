@@ -3,6 +3,7 @@ from django.urls import path, include
 
 from profiles.views import index
 
+
 urlpatterns = [
     path("", index, name="index"),
     path("lettings/", include("lettings.urls")),
