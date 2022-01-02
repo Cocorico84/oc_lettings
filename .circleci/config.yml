@@ -10,9 +10,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      # - run:
-      #     name: Run tests
-      #     command: pytest
+      - run:
+          name: Run tests
+          command: pytest
   deploy:
     docker:
       - image: cimg/python:3.8
@@ -31,4 +31,7 @@ workflows:
   sample:
     jobs:
       - build-and-test
-      - deploy
+      - deploy:
+          filters:
+              branches:
+                only: master
