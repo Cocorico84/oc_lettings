@@ -33,8 +33,8 @@ jobs:
         - run:
             name: Push Docker image to Heroku
             command: |
-              heroku container:push web -a oc-lettings-cz
-              heroku container:release web -a oc-lettings-cz
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push web -a oc-lettings-cz
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release web -a oc-lettings-cz
 
 workflows:
   sample:
