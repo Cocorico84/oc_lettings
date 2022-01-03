@@ -78,3 +78,18 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 ### Déploiement
 
+- Préalable :
+  - Avoir Python et Git
+  - Créer une fixture des données de la BDD sqlite `python manage.py dumpdata > data.json`
+- Création d'un compte Heroku
+- Installer le CLI de Heroku
+- Se connecter avec `heroku login`
+- Ajout des variables de configuration
+  - `heroku config:set DJANGO_SECRET_KEY=my_secret_key`
+  - `heroku config:set SENTRY_DSN=my_dsn`
+  - `heroku config:set DISABLE_COLLECTSTATIC=1`
+- Se mettre au niveau du fichier `manage.py`
+- Lancer `heroku create`
+- `Git push heroku master`
+- `heroku ps:scale web=1`
+- Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
