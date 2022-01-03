@@ -31,9 +31,12 @@ jobs:
       steps:
         - checkout
         - run:
-            name: Build and push Docker image to Heroku
+            name: Push Docker image to Heroku
             command: |
-              git push heroku master
+              sudo curl https://cli-assets.heroku.com/install.sh | sh
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-cz web
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-cz web
 
 workflows:
   sample:
