@@ -89,7 +89,11 @@ Utilisation de PowerShell, comme ci-dessus sauf :
   - `heroku config:set SENTRY_DSN=my_dsn`
   - `heroku config:set DISABLE_COLLECTSTATIC=1`
 - Se mettre au niveau du fichier `manage.py`
-- Lancer `heroku create`
-- `Git push heroku master`
+- Lancer `heroku create my_app`
+- Ajouter `HEROKU_API_KEY` dans les variables du projet dans circleci
+- Ajouter `HEROKU_APP_NAME` le nom de l'application heroku (nom du site)
+- `git push heroku master`
 - `heroku ps:scale web=1`
 - Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
+- Taper la commande `heroku authorizations:create` pour obtenir la clé api
+
