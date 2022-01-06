@@ -20,4 +20,3 @@ class ProfileTest(TestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"test", response.content)
-
