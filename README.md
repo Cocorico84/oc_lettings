@@ -93,7 +93,7 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 - Taper la commande `heroku authorizations:create` pour obtenir la clé api
 - Ajouter `HEROKU_API_KEY` dans les variables du projet dans circleci
 - Ajouter `HEROKU_APP_NAME` le nom de l'application heroku (nom du site)
-- `git push heroku master`
+- `git push heroku master` si c'est la première fois
 - `heroku ps:scale web=1`
 - Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
 
