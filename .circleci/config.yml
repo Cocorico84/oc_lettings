@@ -33,7 +33,10 @@ jobs:
       - checkout
       - run:
           name: Deploy on heroku
-          command: git push heroku master
+          command: |
+            heroku login
+            heroku git:remote -a oc-lettings-cz
+            git push heroku master
 
 workflows:
   sample:
@@ -45,3 +48,6 @@ workflows:
       - deploy:
           requires:
             - push-image
+          filters:
+            branches:
+              only: master
