@@ -46,7 +46,7 @@ workflows:
       - push-image:
           requires:
             - build-and-test
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - push-image
           filters:
