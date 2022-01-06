@@ -27,17 +27,17 @@ jobs:
             docker build -t oc_lettings .
             docker tag oc_lettings cocorico84/oc_lettings:$CIRCLE_SHA1
             docker image push cocorico84/oc_lettings:$CIRCLE_SHA1
-  deploy:
-    docker:
-        - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: Deploy on heroku
-          command: |
-            heroku login
-            heroku git:remote -a oc-lettings-cz
-            git push heroku master
+  # deploy:
+  #   docker:
+  #       - image: cimg/python:3.8
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy on heroku
+  #         command: |
+  #           heroku login
+  #           heroku git:remote -a oc-lettings-cz
+  #           git push heroku master
 
 workflows:
   sample:
@@ -46,7 +46,7 @@ workflows:
       - push-image:
           requires:
             - build-and-test
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - push-image
           filters:
