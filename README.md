@@ -83,17 +83,17 @@ Utilisation de PowerShell, comme ci-dessus sauf :
   - Créer une fixture des données de la BDD sqlite `python manage.py dumpdata > data.json`
 - Création d'un compte Heroku
 - Installer le CLI de Heroku
+- Se mettre au niveau du fichier `manage.py`
 - Se connecter avec `heroku login`
+- Lancer `heroku create my_app`
 - Ajout des variables de configuration
   - `heroku config:set DJANGO_SECRET_KEY=my_secret_key`
   - `heroku config:set SENTRY_DSN=my_dsn`
   - `heroku config:set DISABLE_COLLECTSTATIC=1`
-- Se mettre au niveau du fichier `manage.py`
-- Lancer `heroku create my_app`
+- Taper la commande `heroku authorizations:create` pour obtenir la clé api
 - Ajouter `HEROKU_API_KEY` dans les variables du projet dans circleci
 - Ajouter `HEROKU_APP_NAME` le nom de l'application heroku (nom du site)
 - `git push heroku master`
 - `heroku ps:scale web=1`
 - Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
-- Taper la commande `heroku authorizations:create` pour obtenir la clé api
 
