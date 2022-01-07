@@ -29,7 +29,8 @@ jobs:
             docker tag oc_lettings cocorico84/oc_lettings:$CIRCLE_SHA1
             docker image push cocorico84/oc_lettings:$CIRCLE_SHA1
   deploy:
-    machine: true
+    docker:
+        - image: cimg/python:3.8
     steps:
       - checkout
       - run:
