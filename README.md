@@ -97,3 +97,7 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 - `heroku ps:scale web=1`
 - Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
 - Pour tester en local l'image `docker run -p 8000:8000 oc_lettings`
+
+### Monitoring
+
+- parler de sentry
