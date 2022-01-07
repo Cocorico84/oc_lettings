@@ -33,10 +33,12 @@ jobs:
         - image: cimg/python:3.8
     steps:
       - checkout
-      - run:
-          name: Deploy on heroku
-          command: heroku/deploy-via-git
+      # - run:
+      #     name: Deploy on heroku
+      #     command: heroku/deploy-via-git
       #     command: |
+      - heroku/deploy-via-git:
+          branch: master
       # - heroku/push-docker-image:
       #     branch: master
       # - heroku/release-docker-image:
@@ -57,7 +59,7 @@ workflows:
       - deploy:
           requires:
             - push-image
-          filters:
-             branches:
-               only:
-                 - master
+          # filters:
+          #    branches:
+          #      only:
+          #        - master
