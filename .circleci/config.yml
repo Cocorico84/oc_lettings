@@ -53,10 +53,18 @@ workflows:
       - push-image:
           requires:
             - build-and-test
-      - heroku/deploy-via-git:
+      - heroku/push-docker-image:
           requires:
             - push-image
-          filters:
-             branches:
-               only:
-                 - master
+      - heroku/release-docker-image:
+          requires:
+            - heroku/push-docker-image
+
+
+      # - heroku/deploy-via-git:
+      #     requires:
+      #       - heroku/push-docker-image
+      #     filters:
+      #        branches:
+      #          only:
+      #            - master
