@@ -39,7 +39,8 @@ jobs:
       #     command: |
       - heroku/push-docker-image:
           branch: master
-      - heroku/release-docker-image
+      - heroku/release-docker-image:
+          branch: master
 
 workflows:
   sample:
