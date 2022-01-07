@@ -121,6 +121,3 @@ urllib3==1.26.7; python_version >= "2.7" and python_full_version < "3.0.0" or py
 whitenoise==5.3.0; python_version >= "3.5" and python_version < "4" \
     --hash=sha256:d963ef25639d1417e8a247be36e6aedd8c7c6f0a08adcb5a89146980a96b577c \
     --hash=sha256:d234b871b52271ae7ed6d9da47ffe857c76568f11dd30e28e18c5869dbd11e12
-yapf==0.31.0 \
-    --hash=sha256:e3a234ba8455fe201eaa649cdac872d590089a18b661e39bbac7020978dd9c2e \
-    --hash=sha256:408fb9a2b254c302f49db83c59f9aa0b4b0fd0ec25be3a5c51181327922ff63d
