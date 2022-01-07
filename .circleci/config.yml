@@ -34,17 +34,17 @@ jobs:
       - checkout
       - run:
           name: Deploy on heroku
-      #     # command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+          command: heroku/deploy-via-git
       #     command: |
       # - heroku/push-docker-image:
       #     branch: master
       # - heroku/release-docker-image:
       #     branch: master
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-cz web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+          # command: |
+          #   sudo curl https://cli-assets.heroku.com/install.sh | sh
+          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-cz web
+          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
 
 workflows:
   sample:
@@ -56,7 +56,7 @@ workflows:
       - deploy:
           requires:
             - push-image
-          # filters:
-          #    branches:
-          #      only:
-          #        - master
+          filters:
+             branches:
+               only:
+                 - master
