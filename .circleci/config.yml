@@ -28,23 +28,19 @@ jobs:
             docker build -t oc_lettings .
             docker tag oc_lettings cocorico84/oc_lettings:$CIRCLE_SHA1
             docker image push cocorico84/oc_lettings:$CIRCLE_SHA1
-  # deploy:
-  #   docker:
-  #      - image: cocorico84/oc_lettings:$CIRCLE_SHA1
-  #        auth:
-  #          username: $DOCKER_LOGIN
-  #          password: $DOCKER_PASSWORD
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Deploy on heroku
+  deploy:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Deploy on heroku
   #         command: |
   #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-          # command: |
-          #   sudo curl https://cli-assets.heroku.com/install.sh | sh
-          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-cz web
-          #   HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release web
 
 workflows:
   sample:
@@ -53,17 +49,17 @@ workflows:
       - push-image:
           requires:
             - build-and-test
-      - heroku/push-docker-image:
+      - deploy:
           requires:
             - push-image
-      - heroku/release-docker-image:
-          requires:
-            - heroku/push-docker-image
-
+          filters:
+             branches:
+               only:
+                 - master
 
       # - heroku/deploy-via-git:
       #     requires:
-      #       - heroku/push-docker-image
+      #       - push-image
       #     filters:
       #        branches:
       #          only:
