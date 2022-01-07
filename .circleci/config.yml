@@ -33,13 +33,12 @@ jobs:
         - image: cimg/python:3.8
     steps:
       - checkout
-      - run:
-          name: Deploy on heroku
-          # command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-          command: |
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-cz web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+      # - run:
+      #     name: Deploy on heroku
+      #     # command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+      #     command: |
+      - heroku/deploy-via-git:
+          branch: master
 
 workflows:
   sample:
@@ -51,7 +50,7 @@ workflows:
       - deploy:
           requires:
             - push-image
-          filters:
-             branches:
-               only:
-                 - master
+          # filters:
+          #    branches:
+          #      only:
+          #        - master

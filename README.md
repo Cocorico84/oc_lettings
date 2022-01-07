@@ -100,4 +100,8 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 ### Monitoring
 
-- parler de sentry
+- Préalable :
+  - Avoir installé `pip install --upgrade sentry-sdk`
+  - Créer un compte Sentry
+- Dans le fichier `settings.py`, ajouter sentry
+- Dans sentry.io, vous pouvez voir apparaître votre app
