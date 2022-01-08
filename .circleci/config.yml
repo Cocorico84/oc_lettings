@@ -40,6 +40,9 @@ jobs:
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DJANGO_SECRET_KEY=$(SECRET_KEY)
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SENTRY_DSN=$(SENTRY_DSN)
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DISABLE_COLLECTSTATIC=1
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
 
 workflows:
