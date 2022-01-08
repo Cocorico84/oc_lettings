@@ -36,14 +36,18 @@ jobs:
       - run:
           name: Deploy on heroku
           command: |
-            docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
-            docker build -t cocorico84/oc_lettings:$CIRCLE_SHA1 .
-            docker tag cocorico84/oc_lettings:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-cz/web
-            docker push registry.heroku.com/oc-lettings-cz/web
+            heroku/install
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a oc-lettings-cz web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+    # sudo curl https://cli-assets.heroku.com/install.sh | sh
 
-    #         sudo curl https://cli-assets.heroku.com/install.sh | sh
-    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+    # docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
+    # docker build -t cocorico84/oc_lettings:$CIRCLE_SHA1 .
+    # docker tag cocorico84/oc_lettings:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-cz/web
+    # docker push registry.heroku.com/oc-lettings-cz/web
+
+
 
 workflows:
   sample:
