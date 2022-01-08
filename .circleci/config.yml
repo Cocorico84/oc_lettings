@@ -37,6 +37,7 @@ jobs:
           name: Deploy on heroku
           command: |
             docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
+            docker build -t cocorico84/oc_lettings:$CIRCLE_SHA1 .
             docker tag cocorico84/oc_lettings:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-cz/web
             docker push registry.heroku.com/oc-lettings-cz/web
 
