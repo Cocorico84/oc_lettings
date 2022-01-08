@@ -32,18 +32,36 @@ jobs:
             docker tag cocorico84/oc_lettings:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-cz/web
             docker push registry.heroku.com/oc-lettings-cz/web
   deploy:
-    machine: true
+    docker:
+      - image: cimg/python:3.8
     steps:
+      # For using docker commands.
+      - setup_remote_docker:
+          version: 19.03.13
+
+      # Build the docker image
       - checkout
-      - run:
-          name: Deploy on heroku
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DJANGO_SECRET_KEY=${SECRET_KEY} -a oc-lettings-cz web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SENTRY_DSN=${SENTRY_DSN} -a oc-lettings-cz web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DISABLE_COLLECTSTATIC=1 -a oc-lettings-cz web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
+      - run: docker build .
+
+      # Deploy to Heroku
+      - heroku/install
+      - run: heroku container:login
+      - heroku/push-docker-image:
+          process-types: web
+      - heroku/release-docker-image:
+          process-types: web
+    # machine: true
+    # steps:
+    #   - checkout
+    #   - run:
+    #       name: Deploy on heroku
+    #       command: |
+    #         sudo curl https://cli-assets.heroku.com/install.sh | sh
+    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DJANGO_SECRET_KEY=${SECRET_KEY} -a oc-lettings-cz web
+    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SENTRY_DSN=${SENTRY_DSN} -a oc-lettings-cz web
+    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DISABLE_COLLECTSTATIC=1 -a oc-lettings-cz web
+    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
 
 workflows:
   sample:
