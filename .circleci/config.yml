@@ -25,42 +25,23 @@ jobs:
           name: Create image
           command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
             docker build -t oc_lettings .
             docker tag oc_lettings cocorico84/oc_lettings:$CIRCLE_SHA1
             docker image push cocorico84/oc_lettings:$CIRCLE_SHA1
+
+  deploy:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Deploy on heroku
+          command: |
+            docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
             docker tag cocorico84/oc_lettings:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-cz/web
             docker push registry.heroku.com/oc-lettings-cz/web
-  build_and_deploy:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      # For using docker commands.
-      - setup_remote_docker:
-          version: 19.03.13
 
-      # Build the docker image
-      - checkout
-      - run: docker build .
-
-      # Deploy to Heroku
-      - heroku/install
-      - run: heroku container:login
-      - heroku/push-docker-image:
-          process-types: web
-      - heroku/release-docker-image:
-          process-types: web
-    # machine: true
-    # steps:
-    #   - checkout
-    #   - run:
-    #       name: Deploy on heroku
-    #       command: |
     #         sudo curl https://cli-assets.heroku.com/install.sh | sh
     #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DJANGO_SECRET_KEY=${SECRET_KEY} -a oc-lettings-cz web
-    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SENTRY_DSN=${SENTRY_DSN} -a oc-lettings-cz web
-    #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DISABLE_COLLECTSTATIC=1 -a oc-lettings-cz web
     #         HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a oc-lettings-cz web
 
 workflows:
@@ -70,7 +51,7 @@ workflows:
       - push-image:
           requires:
             - build-and-test
-      - build_and_deploy:
+      - deploy:
           requires:
             - push-image
           filters:
