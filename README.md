@@ -96,7 +96,8 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 - `git push heroku master` si c'est la première fois
 - `heroku ps:scale web=1`
 - Migrer les données sur la BDD postgres `heroku run python3 manage.py loaddata data.json`
-- Pour tester en local l'image `docker run -d -p 8000:8000 oc_lettings`
+- Pour tester en local l'image `docker run -d -p 8000:8000 cocorico84/oc_lettings`
+- Pour tester aller sur l'url `0.0.0.0:8000` dans un navigateur
 
 ### Monitoring
 
