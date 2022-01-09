@@ -32,11 +32,10 @@ jobs:
     machine: true
     steps:
       - checkout
-      - heroku/install
-      - setup_remote_docker
       - run:
           name: Deploy on heroku
           command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a oc-lettings-cz web
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a oc-lettings-cz web
