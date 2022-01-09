@@ -27,15 +27,15 @@ jobs:
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker build -t cocorico84/oc_lettings:$CIRCLE_SHA1 .
             docker push cocorico84/oc_lettings:$CIRCLE_SHA1
-
   deploy:
-    machine: true
+    executor: heroku/default
     steps:
       - checkout
+      - heroku/install
+      - setup_remote_docker
       - run:
           name: Deploy on heroku
           command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a oc-lettings-cz web
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a oc-lettings-cz web
