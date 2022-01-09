@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Cocorico84/oc_lettings/tree/master.svg?style=svg)](https://circleci.com/gh/Cocorico84/oc_lettings/tree/master)
+
 ## Résumé
 
 Site web d'Orange County Lettings
