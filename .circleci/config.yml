@@ -38,7 +38,4 @@ workflows:
       - heroku/deploy-via-git:
           requires:
             - push-image
-          filters:
-             branches:
-               only:
-                 - master
+          only-branch: master
